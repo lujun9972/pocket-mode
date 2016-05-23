@@ -1,11 +1,12 @@
-;;; pocket-view.el --- Mode for viewing pocket.com
+;;; pocket.el --- Manage your pocket
 
 ;; Copyright (C) 2004-2015 Free Software Foundation, Inc.
 
 ;; Author: DarkSun <lujun9972@gmail.com>
-;; Created: 2015-12-31
+;; Created: 2016-5-23
 ;; Version: 0.1
-;; Keywords: convenience, usability
+;; Keywords: convenience, pocket
+;; Package-Requires: ((emacs "24.4") (pocket-api "0.1"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -25,11 +26,7 @@
 ;;; Source code
 ;;
 ;; clean-buffers's code can be found here:
-;;   http://github.com/lujun9972/pocket-view
-
-;;; Commentary:
-
-;; Mode for viewing pocket.com
+;;   http://github.com/lujun9972/pocket-mode
 
 ;; Quick start:
 
@@ -132,4 +129,4 @@
 
 (provide 'pocket-view)
 
-;;; pocket-view.el ends here
+;;; pocket.el ends here
