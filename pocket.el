@@ -121,8 +121,11 @@
       (setq pocket-current-item 0))
     (list-pocket)))
 
+;;;###autoload
 (define-derived-mode pocket-mode tabulated-list-mode "pocket-mode"
   "mode for viewing pocket.com"
+  (when (pocket-api-access-granted-p)
+    (pocket-api-authorize))
   (setq tabulated-list-format [("given_title" 60 nil)
                                ("given_url" 60 t)]
         tabulated-list-entries 'pocket-retrieve)
