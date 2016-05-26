@@ -9,6 +9,8 @@ Manage your pocket
 
 It require [[https://github.com/lujun9972/pocket-api.el][pocket-api]]. Before execute ~list-pocket~, You have to authorized by `pocket-api' already.
 
+[[file:./screen.png]]
+
 * Quick start:
 
 execute the following commands:
