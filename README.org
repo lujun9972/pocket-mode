@@ -1,0 +1,23 @@
+#+TITLE: README
+#+AUTHOR: DarkSun
+#+CATEGORY: pocket-mode
+#+DATE: [2016-05-26 四 21:42]
+#+OPTIONS: ^:{}
+
+* pocket-mode
+Manage your pocket
+
+It require [[https://github.com/lujun9972/pocket-api.el][pocket-api]]. 
+
+* Quick start:
+
+execute the following commands:
++ Execute ~list-pocket~ to list posts in pocket.com
++ then press ~v~ to view post in eww
++ press ~<RET>~ or ~click down mouse-1~ to browse current post with external browser
++ press ~<next>~ to list posts in next-page
++ press ~<prior>~ to list posts in previous-page
++ Press ~a~ to archive the post
++ Press ~C-u a~ to readd the post
++ Press ~d~ to delete the post
++ Press ~C-u d~ to add the post
