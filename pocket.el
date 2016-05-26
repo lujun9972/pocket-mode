@@ -36,6 +36,10 @@
 ;; press ~<RET>~ or ~click down mouse-1~ to browse current post with external browser
 ;; press ~<next>~ to list posts in next-page
 ;; press ~<prior>~ to list posts in previous-page
+;; Press ~a~ to archive the post
+;; Press ~C-u a~ to readd the post
+;; Press ~d~ to delete the post
+;; Press ~C-u d~ to add the post
 
 ;;; Code:
 
@@ -88,13 +92,17 @@
   (let* ((url (pocket--get-current-entry-value "given_url")))
     (browse-url url)))
 
-(defun pocket-archive ()
-  (interactive)
-  (pocket-api-archive (tabulated-list-get-id)))
+(defun pocket-archive (prefix)
+  (interactive "P")
+  (if prefix
+      (pocket-api-archive (tabulated-list-get-id))
+    (pocket-api-readd (tabulated-list-get-id))))
 
-(defun pocket-delete ()
-  (interactive)
-  (pocket-api-delete (tabulated-list-get-id)))
+(defun pocket-delete (prefix)
+  (interactive "P")
+  (if prefix
+      (pocket-api-delete (tabulated-list-get-id))
+    (pocket-api-add (tabulated-list-get-id))))
 
 (defun pocket-next-page (&optional N)
   (interactive)
