@@ -92,17 +92,17 @@
   (let* ((url (pocket--get-current-entry-value "given_url")))
     (browse-url url)))
 
-(defun pocket-archive (prefix)
+(defun pocket-archive-or-readd (prefix)
   (interactive "P")
   (if prefix
       (pocket-api-archive (tabulated-list-get-id))
     (pocket-api-readd (tabulated-list-get-id))))
 
-(defun pocket-delete (prefix)
+(defun pocket-delete-or-add (prefix)
   (interactive "P")
   (if prefix
       (pocket-api-delete (tabulated-list-get-id))
-    (pocket-api-add (tabulated-list-get-id))))
+    (pocket-api-add (read-string "pocket url:"))))
 
 (defun pocket-next-page (&optional N)
   (interactive)
@@ -135,8 +135,8 @@
   (define-key pocket-mode-map (kbd "<down-mouse-1>") 'pocket-browser-view)
   (define-key pocket-mode-map (kbd "<next>") 'pocket-next-page)
   (define-key pocket-mode-map (kbd "<prior>") 'pocket-previous-page)
-  (define-key pocket-mode-map (kbd "a") 'pocket-archive)
-  (define-key pocket-mode-map (kbd "d") 'pocket-delete)
+  (define-key pocket-mode-map (kbd "a") 'pocket-archive-or-readd)
+  (define-key pocket-mode-map (kbd "d") 'pocket-delete-or-add)
   )
 
 ;;;###autoload
