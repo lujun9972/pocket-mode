@@ -89,7 +89,7 @@
 
 (defun pocket-browser-view ()
   (interactive)
-  (let* ((url (pocket--get-current-entry-value "given_url")))
+  (let* ((url (format "https://getpocket.com/a/read/%s" (tabulated-list-get-id))))
     (browse-url url)))
 
 (defun pocket-archive-or-readd (prefix)
