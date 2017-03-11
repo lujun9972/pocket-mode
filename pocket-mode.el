@@ -1,4 +1,4 @@
-;;; pocket.el --- Manage your pocket
+;;; pocket-mode.el --- Manage your pocket
 
 ;; Copyright (C) 2004-2016 Free Software Foundation, Inc.
 
@@ -148,6 +148,6 @@
   (tabulated-list-print t))
 
 
-(provide 'pocket)
+(provide 'pocket-mode)
 
-;;; pocket.el ends here
+;;; pocket-mode.el ends here
