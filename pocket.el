@@ -25,7 +25,7 @@
 
 ;;; Source code
 ;;
-;; clean-buffers's code can be found here:
+;; pocket-mode's code can be found here:
 ;;   http://github.com/lujun9972/pocket-mode
 
 ;; Quick start:
@@ -62,7 +62,7 @@
         (push (list item-id (apply #'vector entry-data)) entries)))
     (reverse entries)))
 
-(pocket-retrieve)
+;; (pocket-retrieve)
 
 (defun pocket--select-or-create-buffer-window (buffer-or-name)
   "若frame中有显示`buffer-or-name'的window,则选中该window,否则创建新window显示该buffer"
@@ -83,7 +83,7 @@
 
 (defun pocket-eww-view ()
   (interactive)
-  (let ((url (pocket--get-current-entry-value "given_url")))
+  (let ((url (pocket--get-current-entry-value "resolved_url")))
     (pocket--select-or-create-buffer-window "*eww*")
     (eww-browse-url url)))
 
@@ -127,7 +127,7 @@
   (when (pocket-api-access-granted-p)
     (pocket-api-authorize))
   (setq tabulated-list-format [("given_title" 60 nil)
-                               ("given_url" 60 t)]
+                               ("resolved_url" 60 t)]
         tabulated-list-entries 'pocket-retrieve)
   (tabulated-list-init-header)
   (define-key pocket-mode-map (kbd "v") 'pocket-eww-view)
@@ -148,6 +148,6 @@
   (tabulated-list-print t))
 
 
-(provide 'pocket-view)
+(provide 'pocket)
 
 ;;; pocket.el ends here
