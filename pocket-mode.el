@@ -46,8 +46,15 @@
 (require 'cl-lib)
 (require 'pocket-api)
 
+(defgroup pocket-mode nil
+  "Manage your pocket")
+
 (defvar pocket-current-item 1)
-(defvar pocket-items-per-page 10)
+
+(defcustom pocket-items-per-page 10
+  "How many items will be displayed per page"
+  :type 'number
+  :group 'pocket-mode)
 
 (cl-defun pocket-retrieve (&key (offset pocket-current-item) (count pocket-items-per-page))
   "Retrieve pocket items"
