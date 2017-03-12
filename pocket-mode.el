@@ -47,11 +47,12 @@
 (require 'pocket-api)
 
 (defgroup pocket-mode nil
-  "Manage your pocket")
+  "Manage your pocket"
+  :group 'tools)
 
 (defvar pocket-current-item 1)
 
-(defcustom pocket-items-per-page 10
+(defcustom pocket-items-per-page 20
   "How many items will be displayed per page"
   :type 'number
   :group 'pocket-mode)
