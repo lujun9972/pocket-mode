@@ -107,8 +107,8 @@
   (interactive "P")
   if prefix
       (pocket-api-archive (tabulated-list-get-id))
-    (pocket-api-readd (tabulated-list-get-id))))
-
+    (pocket-api-readd (tabulated-list-get-id)))
+
 ;;;###autoload
 (defun pocket-delete-or-add (prefix)
   (interactive "P")
