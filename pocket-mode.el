@@ -89,29 +89,34 @@
         (entry (tabulated-list-get-entry)))
     (elt entry pos)))
 
+;;;###autoload
 (defun pocket-eww-view ()
   (interactive)
   (let ((url (pocket--get-current-entry-value "resolved_url")))
     (pocket--select-or-create-buffer-window "*eww*")
     (eww-browse-url url)))
 
+;;;###autoload
 (defun pocket-browser-view ()
   (interactive)
   (let* ((url (pocket--get-current-entry-value "resolved_url")))
     (browse-url url)))
 
+;;;###autoload
 (defun pocket-archive-or-readd (prefix)
   (interactive "P")
   (if prefix
       (pocket-api-archive (tabulated-list-get-id))
     (pocket-api-readd (tabulated-list-get-id))))
 
+;;;###autoload
 (defun pocket-delete-or-add (prefix)
   (interactive "P")
   (if prefix
       (pocket-api-delete (tabulated-list-get-id))
     (pocket-api-add (read-string "pocket url:"))))
 
+;;;###autoload
 (defun pocket-next-page (&optional N)
   (interactive)
   (let ((N (or N pocket-items-per-page)))
@@ -121,6 +126,7 @@
       (error (setq pocket-current-item (- pocket-current-item 1))
              (signal (car err) (cdr err))))))
 
+;;;###autoload
 (defun pocket-previous-page (&optional N)
   (interactive)
   (let ((N (or N pocket-items-per-page)))
@@ -128,6 +134,11 @@
     (when (< pocket-current-item 0)
       (setq pocket-current-item 0))
     (list-pocket)))
+
+;;;###autoload
+(defun pocket-refresh ()
+  (interactive)
+  (tabulated-list-print t t))
 
 ;;;###autoload
 (define-derived-mode pocket-mode tabulated-list-mode "pocket-mode"
@@ -145,6 +156,7 @@
   (define-key pocket-mode-map (kbd "<prior>") 'pocket-previous-page)
   (define-key pocket-mode-map (kbd "a") 'pocket-archive-or-readd)
   (define-key pocket-mode-map (kbd "d") 'pocket-delete-or-add)
+  (define-key pocket-mode-map (kbd "r") 'pocket-refresh)
   )
 
 ;;;###autoload
