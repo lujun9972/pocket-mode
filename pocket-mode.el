@@ -105,7 +105,7 @@
 ;;;###autoload
 (defun pocket-archive-or-readd (prefix)
   (interactive "P")
-  (if prefix
+  if prefix
       (pocket-api-archive (tabulated-list-get-id))
     (pocket-api-readd (tabulated-list-get-id))))
 
@@ -145,7 +145,7 @@
   "mode for viewing pocket.com"
   (when (pocket-api-access-granted-p)
     (pocket-api-authorize))
-  (setq tabulated-list-format [("given_title" 60 nil)
+  (setq tabulated-list-format [("resolved_title" 60 nil)
                                ("resolved_url" 60 t)]
         tabulated-list-entries 'pocket-retrieve)
   (tabulated-list-init-header)
