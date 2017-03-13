@@ -51,6 +51,7 @@
   :group 'tools)
 
 (defvar pocket-current-item 1)
+;; (setq pocket-current-item 53)
 
 (defcustom pocket-items-per-page 20
   "How many items will be displayed per page"
@@ -67,7 +68,8 @@
             (entry-data (mapcar (lambda (item-format)
                                   (cdr (assoc-string (car item-format) item)))
                                 tabulated-list-format)))
-        (push (list item-id (apply #'vector entry-data)) entries)))
+        (unless (member nil entry-data) ;如果有nil的话,会渲染失败
+          (push (list item-id (apply #'vector entry-data)) entries))))
     (reverse entries)))
 
 ;; (pocket-retrieve)
