@@ -1,6 +1,6 @@
-;;; pocket-mode.el --- Manage your pocket
+;;; pocket-mode.el --- Manage your pocket  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2004-2016 Free Software Foundation, Inc.
+;; Copyright (C) 2016-2017 DarkSun
 
 ;; Author: DarkSun <lujun9972@gmail.com>
 ;; Created: 2016-5-23
