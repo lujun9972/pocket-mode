@@ -1,6 +1,6 @@
-;;; pocket-mode.el --- Manage your pocket
+;;; pocket-mode.el --- Manage your pocket  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2004-2016 Free Software Foundation, Inc.
+;; Copyright (C) 2016-2017 DarkSun
 
 ;; Author: DarkSun <lujun9972@gmail.com>
 ;; Created: 2016-5-23
@@ -107,9 +107,9 @@
 ;;;###autoload
 (defun pocket-archive-or-readd (prefix)
   (interactive "P")
-  if prefix
+  (if prefix
       (pocket-api-archive (tabulated-list-get-id))
-    (pocket-api-readd (tabulated-list-get-id)))
+    (pocket-api-readd (tabulated-list-get-id))))
 
 ;;;###autoload
 (defun pocket-delete-or-add (prefix)
@@ -158,8 +158,7 @@
   (define-key pocket-mode-map (kbd "<prior>") 'pocket-previous-page)
   (define-key pocket-mode-map (kbd "a") 'pocket-archive-or-readd)
   (define-key pocket-mode-map (kbd "d") 'pocket-delete-or-add)
-  (define-key pocket-mode-map (kbd "r") 'pocket-refresh)
-  )
+  (define-key pocket-mode-map (kbd "r") 'pocket-refresh))
 
 ;;;###autoload
 (defun list-pocket ()
