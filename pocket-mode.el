@@ -140,7 +140,7 @@
 ;;;###autoload
 (defun pocket-refresh ()
   (interactive)
-  (tabulated-list-print t t))
+  (tabulated-list-print t))
 
 ;;;###autoload
 (define-derived-mode pocket-mode tabulated-list-mode "pocket-mode"
