@@ -161,12 +161,14 @@
   (define-key pocket-mode-map (kbd "r") 'pocket-refresh))
 
 ;;;###autoload
-(defun list-pocket ()
+(defun pocket-list ()
   "list paper in pocket.com"
   (interactive)
   (switch-to-buffer (get-buffer-create "*pocket*"))
   (pocket-mode)
   (tabulated-list-print t))
+
+(defalias 'list-pocket #'pocket-list)
 
 
 (provide 'pocket-mode)
