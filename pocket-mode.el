@@ -31,7 +31,7 @@
 ;; Quick start:
 
 ;; execute the following commands:
-;; `list-pocket' to list posts in pocket.com
+;; `pocket-list' to list posts in pocket.com
 ;; then press ~v~ to view post in eww
 ;; press ~<RET>~ or ~click down mouse-1~ to browse current post with external browser
 ;; press ~<next>~ to list posts in next-page
@@ -56,6 +56,11 @@
 (defcustom pocket-items-per-page 20
   "How many items will be displayed per page"
   :type 'number
+  :group 'pocket-mode)
+
+(defcustom pocket-auto-refresh nil
+  "Non-nil means to refresh after archive/readd/delete/add a post"
+  :type 'boolean
   :group 'pocket-mode)
 
 (cl-defun pocket-retrieve (&key (offset pocket-current-item) (count pocket-items-per-page))
@@ -109,14 +114,18 @@
   (interactive "P")
   (if prefix
       (pocket-api-archive (tabulated-list-get-id))
-    (pocket-api-readd (tabulated-list-get-id))))
+    (pocket-api-readd (tabulated-list-get-id)))
+  (when pocket-auto-refresh
+    (pocket-refresh)))
 
 ;;;###autoload
 (defun pocket-delete-or-add (prefix)
   (interactive "P")
   (if prefix
       (pocket-api-delete (tabulated-list-get-id))
-    (pocket-api-add (read-string "pocket url:"))))
+    (pocket-api-add (read-string "pocket url:")))
+  (when pocket-auto-refresh
+    (pocket-refresh)))
 
 ;;;###autoload
 (defun pocket-next-page (&optional N)
