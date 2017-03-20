@@ -177,6 +177,7 @@
   (pocket-mode)
   (tabulated-list-print t))
 
+;;;###autoload
 (defalias 'list-pocket #'pocket-list)
 
 
