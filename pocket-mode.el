@@ -53,6 +53,11 @@
 (defvar pocket-current-item 1)
 ;; (setq pocket-current-item 53)
 
+(defcustom pocket-buffer-name "*pocket*"
+  "Specify buffer name"
+  :type 'string
+  :group 'pocket-mode)
+
 (defcustom pocket-items-per-page 20
   "How many items will be displayed per page"
   :type 'number
@@ -60,6 +65,11 @@
 
 (defcustom pocket-auto-refresh nil
   "Non-nil means to refresh after archive/readd/delete/add a post"
+  :type 'boolean
+  :group 'pocket-mode)
+
+(defcustom pocket-archive-when-browse nil
+  "Non-nil means make post archived after browse the post"
   :type 'boolean
   :group 'pocket-mode)
 
@@ -101,32 +111,66 @@
   (interactive)
   (let ((url (pocket--get-current-entry-value "resolved_url")))
     (pocket--select-or-create-buffer-window "*eww*")
-    (eww-browse-url url)))
+    (eww-browse-url url))
+  (when pocket-archive-when-browse
+    (with-current-buffer pocket-buffer-name
+      (pocket-archive-or-readd))))
 
 ;;;###autoload
 (defun pocket-browser-view ()
   (interactive)
   (let* ((url (pocket--get-current-entry-value "resolved_url")))
-    (browse-url url)))
+    (browse-url url))
+  (when pocket-archive-when-browse
+    (with-current-buffer pocket-buffer-name
+      (pocket-archive-or-readd ))))
 
 ;;;###autoload
-(defun pocket-archive-or-readd (prefix)
-  (interactive "P")
-  (if prefix
-      (pocket-api-archive (tabulated-list-get-id))
-    (pocket-api-readd (tabulated-list-get-id)))
+(defun pocket-archive ()
+  (interactive)
+  (pocket-api-archive (tabulated-list-get-id))
   (when pocket-auto-refresh
     (pocket-refresh)))
+
+;;;###autoload
+(defun pocket-readd ()
+  (interactive)
+  (pocket-api-readd (tabulated-list-get-id))
+  (when pocket-auto-refresh
+    (pocket-refresh)))
+
+;;;###autoload
+(defun pocket-archive-or-readd (&optional prefix)
+  (interactive "P")
+  (if prefix
+      (pocket-readd)
+    (pocket-archive)))
+
+;;;###autoload
+(defun pocket-delete ()
+  (interactive)
+  (pocket-api-delete (tabulated-list-get-id))
+  (when pocket-auto-refresh
+    (pocket-refresh)))
+
+;;;###autoload
+(defun pocket-add ()
+  (interactive)
+  (pocket-api-add (read-string "pocket url:" (case major-mode
+                                               ('eww-mode (eww-current-url))
+                                               ('w3m-mode w3m-current-url)
+                                               (t ""))))
+  (when pocket-auto-refresh
+    (pocket-refresh)))
+
+;;;###autoload
+(defun pocket-delete-or-add (&optional prefix)
+  (interactive "P")
+  (if prefix
+      (pocket-add)
+    (pocket-delete)))
+
 
-;;;###autoload
-(defun pocket-delete-or-add (prefix)
-  (interactive "P")
-  (if prefix
-      (pocket-api-delete (tabulated-list-get-id))
-    (pocket-api-add (read-string "pocket url:")))
-  (when pocket-auto-refresh
-    (pocket-refresh)))
-
 ;;;###autoload
 (defun pocket-next-page (&optional N)
   (interactive)
@@ -173,7 +217,7 @@
 (defun pocket-list ()
   "list paper in pocket.com"
   (interactive)
-  (switch-to-buffer (get-buffer-create "*pocket*"))
+  (switch-to-buffer (get-buffer-create pocket-buffer-name))
   (pocket-mode)
   (tabulated-list-print t))
 
