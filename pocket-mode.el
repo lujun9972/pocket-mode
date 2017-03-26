@@ -109,26 +109,29 @@
 ;;;###autoload
 (defun pocket-eww-view ()
   (interactive)
-  (let ((url (pocket--get-current-entry-value "resolved_url")))
+  (let ((url (pocket--get-current-entry-value "resolved_url"))
+        (pocket-buf (current-buffer))) ;Current buffer should be the pocket buffer
     (pocket--select-or-create-buffer-window "*eww*")
-    (eww-browse-url url))
-  (when pocket-archive-when-browse
-    (with-current-buffer pocket-buffer-name
-      (pocket-archive-or-readd))))
+    (eww-browse-url url)
+    (when pocket-archive-when-browse
+      (with-current-buffer pocket-buf
+        (pocket-archive-or-readd)))))
 
 ;;;###autoload
 (defun pocket-browser-view ()
   (interactive)
-  (let* ((url (pocket--get-current-entry-value "resolved_url")))
-    (browse-url url))
-  (when pocket-archive-when-browse
-    (with-current-buffer pocket-buffer-name
-      (pocket-archive-or-readd ))))
+  (let* ((url (pocket--get-current-entry-value "resolved_url"))
+         (pocket-buf (current-buffer))) ;Current buffer should be the pocket buffer
+    (browse-url url)
+    (when pocket-archive-when-browse
+      (with-current-buffer pocket-buf
+        (pocket-archive-or-readd )))))
 
 ;;;###autoload
 (defun pocket-archive ()
   (interactive)
   (pocket-api-archive (tabulated-list-get-id))
+  (message "%s archived" (pocket--get-current-entry-value "resolved_title"))
   (when pocket-auto-refresh
     (pocket-refresh)))
 
@@ -136,6 +139,7 @@
 (defun pocket-readd ()
   (interactive)
   (pocket-api-readd (tabulated-list-get-id))
+  (message "%s readded" (pocket--get-current-entry-value "resolved_title"))
   (when pocket-auto-refresh
     (pocket-refresh)))
 
@@ -150,16 +154,19 @@
 (defun pocket-delete ()
   (interactive)
   (pocket-api-delete (tabulated-list-get-id))
+  (message "%s deleted" (pocket--get-current-entry-value "resolved_title"))
   (when pocket-auto-refresh
     (pocket-refresh)))
 
 ;;;###autoload
 (defun pocket-add ()
   (interactive)
-  (pocket-api-add (read-string "pocket url:" (case major-mode
-                                               ('eww-mode (eww-current-url))
-                                               ('w3m-mode w3m-current-url)
-                                               (t ""))))
+  (let ((url (read-string "pocket url:" (case major-mode
+                                          ('eww-mode (eww-current-url))
+                                          ('w3m-mode w3m-current-url)
+                                          (t "")))))
+    (pocket-api-add url)
+    (message "%s added" url))
   (when pocket-auto-refresh
     (pocket-refresh)))
 
@@ -193,7 +200,8 @@
 ;;;###autoload
 (defun pocket-refresh ()
   (interactive)
-  (tabulated-list-print t))
+  (with-current-buffer pocket-buffer-name
+    (tabulated-list-print t)))
 
 ;;;###autoload
 (define-derived-mode pocket-mode tabulated-list-mode "pocket-mode"
