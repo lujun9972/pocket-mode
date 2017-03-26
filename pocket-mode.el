@@ -167,7 +167,7 @@
                                           (t "")))))
     (pocket-api-add url)
     (message "%s added" url))
-  (when pocket-auto-refresh
+  (when (and pocket-auto-refresh (eq major-mode 'pocket-mode))
     (pocket-refresh)))
 
 ;;;###autoload
