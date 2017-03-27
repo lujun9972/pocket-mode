@@ -219,7 +219,11 @@
   (define-key pocket-mode-map (kbd "<prior>") 'pocket-previous-page)
   (define-key pocket-mode-map (kbd "a") 'pocket-archive-or-readd)
   (define-key pocket-mode-map (kbd "d") 'pocket-delete-or-add)
-  (define-key pocket-mode-map (kbd "r") 'pocket-refresh))
+  (define-key pocket-mode-map (kbd "r") 'pocket-refresh)
+  (define-key pocket-mode-map (kbd "j") 'next-line)
+  (define-key pocket-mode-map (kbd "k") 'previous-line)
+  (define-key pocket-mode-map (kbd "h") 'backward-char)
+  (define-key pocket-mode-map (kbd "l") 'forward-char))
 
 ;;;###autoload
 (defun pocket-list ()
