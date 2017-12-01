@@ -50,8 +50,7 @@
   "Manage your pocket"
   :group 'tools)
 
-(defvar pocket-current-item 1)
-;; (setq pocket-current-item 53)
+(defvar pocket-current-item 0)
 
 (defcustom pocket-buffer-name "*pocket*"
   "Specify buffer name"
